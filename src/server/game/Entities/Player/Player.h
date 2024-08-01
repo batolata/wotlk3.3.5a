@@ -668,7 +668,7 @@ enum PlayerSlots
 
 #define INVENTORY_SLOT_BAG_0    255
 
-enum EquipmentSlots                                         // 19 slots
+enum EquipmentSlots : uint32                                 // 19 slots
 {
     EQUIPMENT_SLOT_START        = 0,
     EQUIPMENT_SLOT_HEAD         = 0,
@@ -2041,6 +2041,7 @@ public:
 
     void JoinedChannel(Channel* c);
     void LeftChannel(Channel* c);
+    bool IsInChannel(const Channel* c);
     void CleanupChannels();
     void ClearChannelWatch();
     void UpdateLocalChannels(uint32 newZone);
@@ -2604,6 +2605,8 @@ public:
     void UpdatePlayerSetting(std::string source, uint8 index, uint32 value);
 
     void SendSystemMessage(std::string_view msg, bool escapeCharacters = false);
+
+    void ResetSpeakTimers();
 
     std::string GetDebugInfo() const override;
 
