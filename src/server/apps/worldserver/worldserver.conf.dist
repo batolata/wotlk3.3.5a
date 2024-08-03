@@ -895,7 +895,7 @@ World.RealmAvailability = 1
 #                     16 - (FFA_PVP, Free for all PvP mode like arena PvP in all zones except rest
 #                          activated places and sanctuaries)
 
-GameType = 0
+GameType = 16
 
 #
 #    RealmZone
@@ -1997,7 +1997,7 @@ StartHeroicPlayerLevel = 55
 #                     1 - (Show intro only for first character of selected race)
 #                     2 - (Disable intro for all classes)
 
-SkipCinematics = 0
+SkipCinematics = 2
 
 #
 #    StartPlayerMoney
@@ -2557,7 +2557,7 @@ DurabilityLossChance.Block = 0.05
 #                     MaxPlayerLevel+1 - (Disabled)
 #                     -10              - (Enabled, Level 1+ characters have 10 minute duration)
 
-Death.SicknessLevel = 11
+Death.SicknessLevel = 81
 
 #
 #    Death.CorpseReclaimDelay.PvP
@@ -4446,6 +4446,26 @@ Debug.Arena = 0
 #
 ###################################################################################################
 
+# PVP Elite Announcers#
+###################
+#
+#     KilledByCreature.Announcer
+#        Announce Player Killed by Creature to server.
+#        Default:     1 (Default)
+#                      0 (Disabled)
+
+KilledByCreature.Announcer = 1
+
+#
+#     PvPKill.Announcer
+#        Announce Player Killed by PVP to server.
+#        Default:     1 (Default)
+#                      0 (Disabled)
+
+PvPKill.Announcer = 1
+
+#
+
 ###################################################################################################
 # NPCBOT CONFIGURATION
 #
@@ -4472,7 +4492,7 @@ NpcBot.LogToDB = 1
 #                     0,1,2,3,4,5,6,7,8 - (1 per 10 levels)
 #        Max:         39
 
-NpcBot.MaxBots = 39,39,39,39,39,39,39,39,39
+NpcBot.MaxBots = 2,2,2,2,2,2,2,2,2
 
 #
 #    NpcBot.MaxBotsPerClass
