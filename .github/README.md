@@ -1,5 +1,6 @@
 # ![logo](https://www.falafelmaker.com/images/tutorial/logo/solofavicon.png)
-                  ![center]SoloCore
+                SOLOCore
+
 ## Build Status
 
 [![nopch-build](https://github.com/azerothcore/azerothcore-wotlk/actions/workflows/core-build-nopch.yml/badge.svg?branch=master)](https://github.com/azerothcore/azerothcore-wotlk/actions/workflows/core-build-nopch.yml)
