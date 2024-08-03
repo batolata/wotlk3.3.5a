@@ -1,4 +1,7 @@
-# ![logo](https://www.falafelmaker.com/images/tutorial/logo/solofavicon.png)
+<p align="center">
+  <img width="460" height="300" src="https://www.falafelmaker.com/images/tutorial/logo/solofavicon.png">
+ SOLOCore
+</p>
 
 ## Build Status
 
