@@ -2,7 +2,7 @@
   <img src="https://www.falafelmaker.com/images/tutorial/logo/solofavicon.png">
 </p>
 <h1 align="center">
-  SOLOCore
+SOLOCore
 </h1>
 
 ## Build Status
