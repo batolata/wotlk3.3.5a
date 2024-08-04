@@ -169,7 +169,14 @@ enum UnitClass
     UNIT_CLASS_MAGE                     = 8,
 };
 
+//npcbot
+/*
+//end npcbot
 #define CLASSMASK_ALL_CREATURES ((1<<(UNIT_CLASS_WARRIOR-1)) | (1<<(UNIT_CLASS_PALADIN-1)) | (1<<(UNIT_CLASS_ROGUE-1)) | (1<<(UNIT_CLASS_MAGE-1)))
+//npcbot
+*/
+#define CLASSMASK_ALL_CREATURES CLASSMASK_ALL_PLAYABLE
+//end npcbot
 
 #define CLASSMASK_WAND_USERS ((1<<(CLASS_PRIEST-1))|(1<<(CLASS_MAGE-1))|(1<<(CLASS_WARLOCK-1)))
 
@@ -1367,7 +1374,7 @@ enum Mechanics : uint32
     (1<<MECHANIC_SAPPED))
 
 // Spell dispel type
-enum DispelType
+enum DispelType : uint8
 {
     DISPEL_NONE         = 0,
     DISPEL_MAGIC        = 1,
@@ -1631,7 +1638,7 @@ enum GameObjectDestructibleState
 };
 
 // EmotesText.dbc
-enum TextEmotes
+enum TextEmotes : uint32
 {
     TEXT_EMOTE_AGREE                = 1,
     TEXT_EMOTE_AMAZE                = 2,
@@ -3146,7 +3153,7 @@ enum WeatherType
 #define MAX_WEATHER_TYPE 4
 
 // EnumUtils: DESCRIBE THIS
-enum ChatMsg
+enum ChatMsg : uint32
 {
     CHAT_MSG_ADDON                  = 0xFFFFFFFF,
     CHAT_MSG_SYSTEM                 = 0x00,
@@ -3305,6 +3312,22 @@ enum SummonType
     SUMMON_TYPE_LIGHTWELL   = 11,
     SUMMON_TYPE_JEEVES      = 12
 };
+
+enum SummonSlot
+{
+    SUMMON_SLOT_PET                 = 0,
+    SUMMON_SLOT_TOTEM_FIRE          = 1,
+    SUMMON_SLOT_TOTEM_EARTH         = 2,
+    SUMMON_SLOT_TOTEM_WATER         = 3,
+    SUMMON_SLOT_TOTEM_AIR           = 4,
+    SUMMON_SLOT_MINIPET             = 5,
+    SUMMON_SLOT_QUEST               = 6,
+
+    MAX_SUMMON_SLOT
+};
+
+#define MAX_TOTEM_SLOT      5
+#define MAX_GAMEOBJECT_SLOT 4
 
 enum EventId
 {

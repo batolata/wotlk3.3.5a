@@ -25,6 +25,10 @@
 #include "SpellMgr.h"
 #include "UnitAI.h"
 
+//npcbot
+#include "botmgr.h"
+//end npcbot
+
 namespace
 {
     template<typename T>
@@ -59,12 +63,27 @@ ScriptMgr* ScriptMgr::instance()
     return &instance;
 }
 
+// DecrypteD wuz here! xD https://sololeveling.wtf
+MetricScript::MetricScript(const char* name) : ScriptObject(name)
+{
+    ScriptRegistry<MetricScript>::AddScript(this);
+}
+
+PlayerbotScript::PlayerbotScript(const char* name) : ScriptObject(name)
+{
+    ScriptRegistry<PlayerbotScript>::AddScript(this);
+}
+
 void ScriptMgr::Initialize()
 {
     LOG_INFO("server.loading", "> Loading C++ scripts");
     LOG_INFO("server.loading", " ");
 
     AddSC_SmartScripts();
+
+    //npcbot: load bot scripts here
+    AddNpcBotScripts();
+    //end npcbot
 
     // LFGScripts
     lfg::AddSC_LFGScripts();
@@ -137,11 +156,13 @@ void ScriptMgr::Unload()
     SCR_CLEAR<ItemScript>();
     SCR_CLEAR<LootScript>();
     SCR_CLEAR<MailScript>();
+    SCR_CLEAR<MetricScript>();
     SCR_CLEAR<MiscScript>();
     SCR_CLEAR<MovementHandlerScript>();
     SCR_CLEAR<OutdoorPvPScript>();
     SCR_CLEAR<PetScript>();
     SCR_CLEAR<PlayerScript>();
+    SCR_CLEAR<PlayerbotScript>();
     SCR_CLEAR<ServerScript>();
     SCR_CLEAR<SpellSC>();
     SCR_CLEAR<SpellScriptLoader>();
@@ -224,7 +245,9 @@ void ScriptMgr::CheckIfScriptsInDatabaseExist()
                 !ScriptRegistry<CommandSC>::GetScriptById(sid) &&
                 !ScriptRegistry<ArenaScript>::GetScriptById(sid) &&
                 !ScriptRegistry<GroupScript>::GetScriptById(sid) &&
-                !ScriptRegistry<DatabaseScript>::GetScriptById(sid))
+                !ScriptRegistry<DatabaseScript>::GetScriptById(sid) &&
+                !ScriptRegistry<MetricScript>::GetScriptById(sid) &&
+                !ScriptRegistry<PlayerbotScript>::GetScriptById(sid))
                 {
                     LOG_ERROR("sql.sql", "Script named '{}' is assigned in the database, but has no code!", scriptName);
                 }

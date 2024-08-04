@@ -193,6 +193,16 @@ public:
     bool   Create(Player* leader);
     bool   LoadGroupFromDB(Field* field);
     void   LoadMemberFromDB(ObjectGuid::LowType guidLow, uint8 memberFlags, uint8 subgroup, uint8 roles);
+    //npcbot
+    bool Create(Creature* leader);
+    bool AddMember(Creature* creature);
+    void LoadCreatureMemberFromDB(uint32 entry, uint8 memberFlags, uint8 subgroup, uint8 roles);
+    void UpdateBotOutOfRange(Creature* creature);
+    void LinkBotMember(GroupBotReference* bRef);
+    void DelinkBotMember(ObjectGuid guid);
+    GroupBotReference* GetFirstBotMember() { return m_botMemberMgr.getFirst(); }
+    GroupBotReference const* GetFirstBotMember() const { return m_botMemberMgr.getFirst(); }
+    //end npcbot
     bool   AddInvite(Player* player);
     void   RemoveInvite(Player* player);
     void   RemoveAllInvites();
@@ -260,6 +270,8 @@ public:
     void SetGroupMemberFlag(ObjectGuid guid, bool apply, GroupMemberFlags flag);
     void RemoveUniqueGroupMemberFlag(GroupMemberFlags flag);
 
+    ObjectGuid const GetTargetIcon(uint8 id) const { return m_targetIcons[id]; }
+
     Difficulty GetDifficulty(bool isRaid) const;
     Difficulty GetDungeonDifficulty() const;
     Difficulty GetRaidDifficulty() const;
@@ -298,6 +310,8 @@ public:
     bool CountRollVote(ObjectGuid playerGUID, ObjectGuid Guid, uint8 Choise);
     void EndRoll(Loot* loot, Map* allowedMap);
 
+    Rolls GetRolls() const { return RollId; }
+
     // related to disenchant rolls
     void ResetMaxEnchantingLevel();
 
@@ -322,6 +336,10 @@ public:
 
     DataMap CustomData;
 
+    //npcbots
+    ObjectGuid const* GetTargetIcons() const { return m_targetIcons; }
+    //end npcbots
+
 protected:
     void _homebindIfInstance(Player* player);
     void _cancelHomebindIfInstance(Player* player);
@@ -335,6 +353,9 @@ protected:
 
     MemberSlotList      m_memberSlots;
     GroupRefMgr     m_memberMgr;
+    //npcbot
+    GroupBotRefManager  m_botMemberMgr;
+    //end npcbot
     InvitesList         m_invitees;
     ObjectGuid          m_leaderGuid;
     std::string         m_leaderName;

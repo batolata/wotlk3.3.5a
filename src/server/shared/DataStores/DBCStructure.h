@@ -562,9 +562,11 @@ struct AreaPOIEntry
     uint32 mapId;               //15
     //uint32 val1;              //16
     uint32 zoneId;              //17
-    //char const* name[16];     //18-33
+    char const* name;           // 18
+    //char const* name[15];     // 19-33
     //uint32 name_flag;         //34
-    //char const* name2[16];    //35-50
+    char const* name2;          // 35
+    //char const* name2[15];    // 36-50
     //uint32 name_flag2;        //51
     uint32 worldState;          //52
     //uint32 val2;              //53
@@ -626,6 +628,33 @@ struct CharStartOutfitEntry
     int32 ItemId[MAX_OUTFIT_ITEMS];                         // 5-28
     //int32 ItemDisplayId[MAX_OUTFIT_ITEMS];                // 29-52 not required at server side
     //int32 ItemInventorySlot[MAX_OUTFIT_ITEMS];            // 53-76 not required at server side
+};
+
+enum CharSectionFlags
+{
+	SECTION_FLAG_PLAYER         = 0x01,
+	SECTION_FLAG_DEATH_KNIGHT   = 0x04
+};
+
+enum CharSectionType
+{
+	SECTION_TYPE_SKIN           = 0,
+	SECTION_TYPE_FACE           = 1,
+	SECTION_TYPE_FACIAL_HAIR    = 2,
+	SECTION_TYPE_HAIR           = 3,
+	SECTION_TYPE_UNDERWEAR      = 4
+};
+
+struct CharSectionsEntry
+{
+	//uint32 Id;
+	uint32 Race;
+	uint32 Gender;
+	uint32 GenType;
+	//char* TexturePath[3];
+	uint32 Flags;
+	uint32 Type;
+	uint32 Color;
 };
 
 struct CharTitlesEntry
@@ -901,6 +930,15 @@ struct EmotesTextEntry
 {
     uint32  Id;
     uint32  textid;
+};
+
+struct EmotesTextSoundEntry
+{
+	uint32 Id;                                              // 0
+	uint32 EmotesTextId;                                    // 1
+	uint32 RaceId;                                          // 2
+	uint32 SexId;                                           // 3, 0 male / 1 female
+	uint32 SoundId;                                         // 4
 };
 
 struct FactionEntry
