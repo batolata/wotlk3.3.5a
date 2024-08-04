@@ -5,6 +5,7 @@ Refactored by JAGPH TeaM
 #include "Player.h"
 #include "Creature.h"
 #include "World.h"
+#include <botmgr.cpp>
 
 class pvpelite_announcer : public PlayerScript
 {
