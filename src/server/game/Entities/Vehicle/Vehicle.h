@@ -54,13 +54,7 @@ public:
 
     SeatMap Seats;
 
-    //npcbot
-    /*
     VehicleSeatEntry const* GetSeatForPassenger(Unit const* passenger);
-    */
-    VehicleSeatEntry const* GetSeatForPassenger(Unit const* passenger) const;
-    //end npcbot
-
     SeatMap::iterator GetSeatIteratorForPassenger(Unit* passenger);
 
 protected:

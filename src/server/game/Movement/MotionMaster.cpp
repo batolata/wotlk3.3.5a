@@ -571,26 +571,6 @@ void MotionMaster::MoveJump(float x, float y, float z, float speedXY, float spee
     if (speedXY <= 0.1f)
         return;
 
-    //npcbot: blademaser only (disabled)
-    /*
-    if (_owner->IsNPCBot())
-    {
-        Movement::MoveSplineInit init(_owner);
-        init.MoveTo(x, y, z, false);
-        init.SetParabolic(speedZ, 0);
-        init.SetFacing(o);
-        init.SetOrientationFixed(true);
-        init.SetVelocity(speedXY);
-
-        GenericMovementGenerator* movement = new GenericMovementGenerator(std::move(init), EFFECT_MOTION_TYPE, EVENT_JUMP);
-        movement->Priority = MOTION_PRIORITY_HIGHEST;
-        movement->BaseUnitState = UNIT_STATE_JUMPING;
-        Add(movement);
-        return;
-    }
-    */
-    //end npcbot
-
     float moveTimeHalf = speedZ / Movement::gravity;
     float max_height = -Movement::computeFallElevation(moveTimeHalf, false, -speedZ);
 
@@ -852,30 +832,6 @@ void MotionMaster::MoveRotate(uint32 time, RotateDirection direction)
 
     Mutate(new RotateMovementGenerator(time, direction), MOTION_SLOT_ACTIVE);
 }
-
-#ifdef MOD_PLAYERBOTS
-void MotionMaster::MoveKnockbackFromForPlayer(float srcX, float srcY, float speedXY, float speedZ)
-{
-    if (speedXY <= 0.1f)
-        return;
-
-    Position dest = _owner->GetPosition();
-    float moveTimeHalf = speedZ / Movement::gravity;
-    float dist = 2 * moveTimeHalf * speedXY;
-    float max_height = -Movement::computeFallElevation(moveTimeHalf, false, -speedZ);
-
-    // Use a mmap raycast to get a valid destination.
-    _owner->MovePositionToFirstCollision(dest, dist, _owner->GetRelativeAngle(srcX, srcY) + float(M_PI));
-
-    Movement::MoveSplineInit init(_owner);
-    init.MoveTo(dest.GetPositionX(), dest.GetPositionY(), dest.GetPositionZ());
-    init.SetParabolic(max_height, 0);
-    init.SetOrientationFixed(true);
-    init.SetVelocity(speedXY);
-    init.Launch();
-    Mutate(new EffectMovementGenerator(0), MOTION_SLOT_CONTROLLED);
-}
-#endif
 
 void MotionMaster::propagateSpeedChange()
 {

@@ -77,11 +77,6 @@ enum CreatureFlagsExtra : uint32
     CREATURE_FLAG_EXTRA_HARD_RESET                      = 0x80000000,
 
     // Masks
-    //npcbot
-    CREATURE_FLAG_EXTRA_NPCBOT                          = (CREATURE_FLAG_EXTRA_HARD_RESET | CREATURE_FLAG_EXTRA_DONT_CALL_ASSISTANCE | CREATURE_FLAG_DONT_OVERRIDE_ENTRY_SAI | CREATURE_FLAG_EXTRA_IGNORE_ALL_ASSISTANCE_CALLS),
-    CREATURE_FLAG_EXTRA_NPCBOT_PET                      = (CREATURE_FLAG_EXTRA_HARD_RESET | CREATURE_FLAG_EXTRA_DONT_CALL_ASSISTANCE | CREATURE_FLAG_DONT_OVERRIDE_ENTRY_SAI),
-    //end npcbot
-
     CREATURE_FLAG_EXTRA_UNUSED                          = (CREATURE_FLAG_EXTRA_UNUSED_12), // SKIP
 
     CREATURE_FLAG_EXTRA_DB_ALLOWED                      = (0xFFFFFFFF & ~(CREATURE_FLAG_EXTRA_UNUSED | CREATURE_FLAG_EXTRA_DUNGEON_BOSS)) // SKIP
@@ -262,21 +257,6 @@ struct CreatureTemplate
     CreatureModel const* GetFirstVisibleModel() const;
 
     // helpers
-    //npcbot
-    bool IsNPCBot() const
-    {
-        return (flags_extra & CREATURE_FLAG_EXTRA_NPCBOT) == CREATURE_FLAG_EXTRA_NPCBOT;
-    }
-    bool IsNPCBotPet() const
-    {
-        return (flags_extra & CREATURE_FLAG_EXTRA_NPCBOT) == CREATURE_FLAG_EXTRA_NPCBOT_PET;
-    }
-    bool IsNPCBotOrPet() const
-    {
-        return IsNPCBot() || IsNPCBotPet();
-    }
-    //end npcbot
-
     [[nodiscard]] SkillType GetRequiredLootSkill() const
     {
         if (type_flags & CREATURE_TYPE_FLAG_SKIN_WITH_HERBALISM)
@@ -392,7 +372,6 @@ typedef std::unordered_map<uint32, EquipmentInfoContainerInternal> EquipmentInfo
 struct CreatureData
 {
     CreatureData() = default;
-    ObjectGuid::LowType spawnId{0};
     uint32 id1{0};                                             // entry in creature_template
     uint32 id2{0};                                             // entry in creature_template
     uint32 id3{0};                                             // entry in creature_template
