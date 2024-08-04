@@ -55,7 +55,6 @@ class BasicEvent
 
         // Aborts the event at the next update tick
         void ScheduleAbort();
-        bool IsActive() const { return m_abortState == AbortState::STATE_RUNNING; }
 
     private:
         void SetAborted();
