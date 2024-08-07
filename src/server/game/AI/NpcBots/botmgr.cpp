@@ -1,3 +1,4 @@
+
 #include "Battleground.h"
 #include "BattlegroundMgr.h"
 #include "bot_ai.h"
@@ -1476,7 +1477,6 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
         if (mymap)
         {
             bot->BotStopMovement();
-            botai->UnsummonAll();
 
             if (mymap != newMap)
             {
@@ -1491,6 +1491,8 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
 
             if (bot->IsInWorld())
             {
+                botai->UnsummonAll(!botai->IAmFree() || botai->IsWanderer());
+
                 if (Battleground* bg = bot->GetBotBG())
                     bg->EventBotDroppedFlag(bot);
 
@@ -1516,7 +1518,7 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
                 mymap->RemoveFromMap(bot, false);
         }
 
-        if (bot->IsFreeBot())
+        if (botai->IAmFree())
         {
             bot->Relocate(x, y, z, ori);
             if (bot->FindMap())
@@ -1537,6 +1539,7 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
                 botai->Reset();
             botai->SetIsDuringTeleport(false);
             botai->ResetContestedPvP();
+            botai->ResummonAll();
 
             if (newMap->IsBattleground())
             {
@@ -1635,7 +1638,7 @@ void BotMgr::CleanupsBeforeBotDelete(Creature* bot)
         bot->ExitVehicle();
 
     //remove any summons
-    bot->GetBotAI()->UnsummonAll();
+    bot->GetBotAI()->UnsummonAll(false);
     bot->AttackStop();
     bot->CombatStopWithPets(true);
     bot->getHostileRefMgr().deleteReferences();
@@ -1797,7 +1800,7 @@ BotAddResult BotMgr::AddBot(Creature* bot)
     if (!bot->IsAlive())
         _reviveBot(bot);
 
-    bot->GetBotAI()->UnsummonAll();
+    bot->GetBotAI()->UnsummonAll(false);
 
     _bots[bot->GetGUID()] = bot;
 
@@ -2226,7 +2229,7 @@ void BotMgr::UpdatePhaseForBots()
     {
         itr->second->SetPhaseMask(_owner->GetPhaseMask(), itr->second->IsInWorld());
         if (itr->second->GetBotsPet())
-            itr->second->GetBotsPet()->SetPhaseMask(_owner->GetPhaseMask(), true); //only if in world
+            itr->second->GetBotsPet()->SetPhaseMask(_owner->GetPhaseMask(), itr->second->GetBotsPet()->IsInWorld());
     }
 }
 
